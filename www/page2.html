@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PK @HOME</title>
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+        crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+
+
+    <script type="text/javascript">
+        var path = 'http://mba.bkksol.com/uiPK/apipk/'
+
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
+        };
+
+        function myFunction(appointment_id) {
+            var pinid = getUrlParameter('users_id');
+            r= confirm("คุณแน่ใจที่จะเปลี่ยนแปลง");
+
+  if (r == true) {
+            $.ajax({
+                url: 'index.php?mode=status_change&appointment_id=' + appointment_id,
+                type: 'GET'
+            }).done(function (data) {
+
+    window.location.href='page2.html?users_id='+pinid+'';
+            });
+} else {
+   //
+}
+        
+
+    
+        }
+
+
+
+        function saveData(appointment_id) {
+            var pinid = getUrlParameter('users_id');
+            $('#edit').modal();
+            $.ajax({
+                url: 'index.php?mode=readitto&appointment_id=' + appointment_id,
+                type: 'GET'
+            }).done(function (data) {
+                // console.log("testttttt" + data);
+                var data = JSON.parse(data);
+                $('#appointment_id').val(appointment_id);               
+                $('#appointment_date').val(data[0].appointment_date);
+                var newdateend = data[0].appointment_date_stop;
+                var newdate = data[0].appointment_date;
+
+
+                //date start
+                var word = newdate.split(" ");
+                console.log(word);
+                var mounth = word[0];
+                var time = word[1];
+
+
+             
+                // console.log(mounth);
+                // console.log(time);
+
+                //date end
+                var dateendword = newdateend.split(" ");
+                var timeend = dateendword[1];
+
+                $('#appointment_date_mounth').val(mounth)
+                $('#appointment_date_time').val(time)
+                $('#appointment_date_end_time').val(timeend)
+                
+
+
+            });
+
+            $('#save2').click(function () {
+                // var data = JSON.parse(data);
+                $.ajax({
+                    url: 'http://mba.bkksol.com/uiPK/apipk/index.php',
+                    type: 'POST',
+                    data: "mode=" + "updatedatetime" +
+
+                        "&appointment_id=" + $("#appointment_id").val() +
+                        "&appointment_date=" + $("#appointment_date").val() +
+                        "&appointment_date_stop=" + $("#appointment_date_stop").val() +
+                        "&appointment_date_mounth=" + $("#appointment_date_mounth").val() +
+                        "&appointment_date_time=" + $("#appointment_date_time").val() +
+                        "&appointment_date_end_time=" + $("#appointment_date_end_time").val(),
+
+                    success: function (data) {
+                        console.log(data);
+
+                        ons.notification.toast('The data was saved', {
+                            timeout: 1000
+                        }).then(function (save2) {
+                            window.location.replace('page2.html?users_id=' + pinid);
+                        });
+                    }
+                });
+            });
+
+        }
+        $(document).ready(function () {
+            load_data();
+
+            function load_data(query) {
+                $.ajax({
+                    url: path + "index.php?mode=read",
+                    method: "GET",
+                    data: query,
+                    success: function (data) {
+                        console.log(data);
+                        var status = "";
+                        var data = JSON.parse(data);
+                        var row = '';
+                
+                var st=["รอรับการตรวจ","ได้รับการตรวจ"];
+                
+                        for (var i = 0; i < data.length; i++) {
+                            if (data[i].status_id == 0) {
+                               status = "รอรับการตรวจ";
+                            }
+                            var status_show='';
+                        
+                            $('#patient_id').val(data[i].patient_id)
+                            var newdate = data[i].appointment_date;
+
+                            var timeread = newdate.split(" ");
+                            
+                             var stime = timeread[1].split(":");
+                             var starttime = stime[0]+":"+stime[1];
+
+                            var enddate = data[i].appointment_date_stop;
+                            var dateendword = enddate.split(" ");
+
+                            var timeend = dateendword[1].split(":");
+                            var endtime = timeend[0]+":"+timeend[1];
+                        
+                            console.log(starttime);
+                            console.log(endtime);
+                
+                            var row =
+                                '<div style="height: 100%; padding: 1px 0 0 0;">' +
+                                '<div class="card">' +
+                                '<label>' + 
+                                '<button type="button" class="btn" style="float:right; background-color:#17a2b8; color: white;"onclick="myFunction('+data[i].appointment_id+')">change status</button>'+
+                                // '<h6 style="float:right; ">' + 'status : ' + status + '</h6>' +
+                               '<p >' + data[i].firstname + '   ' + data[i].lastname + '</p>' +
+                                // '<select   style="float:right" ">'+
+                               
+                                // '<option value="0"'
+                                //  if(data[i].status_id==0){
+                                // row+= 'selected' }+'>'+
+                                // '</option>'+
+                                // '<option value="1" '
+                                // if(data[i].status_id==1){
+                                // row+= 'selected' }+'>'
+                                // +'</option>'+
+                                // '</select>'+
+                                '</label>' +
+                             
+                                '<label>' +
+                                '<p><span style="font-size: 1rem;"><i class="fas fa-clock"></i></span> : ' +
+                                    timeread[0]+" "+starttime + '   ' +
+                                ' to ' + endtime + ' </p>' + '</label>' +
+                                '<div class="row">' +
+
+                                '<div class="col" style="text-align: center;">' +
+                                '<a href="page44.html?users_id=' + data[i].users_id +
+                                '" style="font-size: 15px; ">' +
+                                '<div style="font-size:2em; text-align: center; color:black"><i class="fas fa-file-signature"></i></div>' + 'Treatment' + '</a></div>' +
+                                '<div class="col" style="text-align: center;">' +
+                                '<a href="page3.html?users_id=' + data[i].users_id +
+                                '" style="font-size: 15px; ">' +
+                                '<div style="font-size:2em; text-align: center; color:black"><i class="fas fa-address-book"></i></div>' +
+                                'Information' + '</a></div>' +
+
+
+                                '<div class="col" style="text-align: center; margin-top: -5px;">' +
+                                '<div style="font-size: 2em;">' +
+                                '<i class="fa fa-calendar" onclick="saveData(' + data[i].appointment_id + ')"></i></div>' + '<a>Appointment</a>' +
+                                "<input type='hidden' name='appointment_id' id='appointment_id'  value=" +  data[i].appointment_id + ">" + '</div>' ;
+
+    
+
+                            $('#data').append(row)
+
+                        }
+                    }
+                });
+            }
+
+
+            $('#logout').click(function () {
+
+                $.ajax({
+                    url: 'http://mba.bkksol.com/uiPK/apipk/index.php?argument=logOut',
+                    success: function (data) {
+                        window.location.replace('index.html');
+                    }
+                });
+            });
+        });
+    </script>
+
+
+
+
+    <style>
+        .page {
+            font-family: 'Kanit', sans-serif;
+        }
+
+        .ons-col {
+            text-align: center;
+        }
+
+        b {
+            font-family: 'Abril Fatface', cursive;
+        }
+
+
+        a ,p, h6, label, h4, button{
+            font-family: 'Kanit', sans-serif;
+            color: black;
+        }
+
+        /* ------- Presentational Formatting --------- */
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .page--material__content h1, h1{
+            text-align: center;
+            margin: -0.4em 0;
+        }
+
+        b {
+            color: white;
+            font-size: 20px;
+        }
+
+        [type=submit] {
+            background-color: #212529;
+            border: none;
+            color: white;
+        }
+
+        .btn-lg {
+            padding: .4rem 1rem;
+            font-size: 1rem;
+        }
+
+        :checked+.tabbar__button {
+            color: #17a2b8;
+        }
+
+        .bg-light {
+            background-color: #17a2b8;
+        }
+    </style>
+</head>
+
+<body>
+
+    <ons-page>
+        <nav class="navbar" style="background-color: #17a2b8;">
+            <span><b>PK @HOME</b></span>
+            <div class="dropdown show">
+                <a style="color: #ffffff;" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <span style="font-size: 1.5rem;"> <i class="fas fa-bars"></i></span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="left: -35vw;">
+                    <a class="dropdown-item" href="page2.html">Home</a>
+                    <a class="dropdown-item" id="logout">Sign out</a>
+                    <a class="dropdown-item" href="page5.html">Picture</a>
+                </div>
+            </div>
+        </nav>
+        <br>
+        <div style="text-align: center;">
+            <h1><a>Appointment</a></h1>
+            <p style="text-align: center;">
+
+                <div style=" padding: 1px 0 0 0;">
+                    <div id="data">
+                    </div> 
+                </div>
+        </div>
+
+    </ons-page>
+
+
+    <!-- edit  -->
+
+    <div class="modal fade" id="edit" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Appointment Time</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form method='GET' style="margin-left:5vw; margin-right:5vw; margin-top: -3vh;">
+                        <div>
+
+
+                            <ons-input type="hidden" id="appointment_id" value="" placeholder=""></ons-input>
+
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label col-form-label-sm">Date :</label>
+                                <div class="col">
+                                    <input type="date" class="form-control form-control-sm" id="appointment_date_mounth"
+                                        placeholder="appointment_date_mounth">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label col-form-label-sm">Time :</label>
+                                <div class="col">
+                                    <input type="time" class="form-control form-control-sm" id="appointment_date_time"
+                                        placeholder="appointment_date_time" step="1800">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label col-form-label-sm">Time :</label>
+                                <div class="col">
+                                    <input type="time" class="form-control form-control-sm" id="appointment_date_end_time"
+                                        placeholder="appointment_date_end_time" step="1800">
+                                </div>
+                            </div>
+                           
+
+
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" id="save2" class="btn btn-success">Confirm</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>

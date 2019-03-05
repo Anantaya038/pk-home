@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Information</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
+        };
+        $(function () {
+            var pinid = getUrlParameter('users_id');
+
+            $.ajax({
+                url: 'http://mba.bkksol.com/uiPK/apipk/index.php?mode=update&users_id=' + pinid,
+                type: 'GET'
+            }).done(function (data) {
+                console.log(data);
+                data = JSON.parse(data);
+                // console.log(data);
+                $('#users_id').val(pinid);
+                $('#firstname').val(data[0].firstname);
+                $('#lastname').val(data[0].lastname);
+                $('#nickname').val(data[0].nickname);
+                $('#card_id').val(data[0].card_id);
+                $('#email').val(data[0].email);
+                $('#birthdate').val(data[0].birthdate);
+                $('#mobile').val(data[0].mobile);
+                $('#address').val(data[0].address);
+                $('#sub_district').val(data[0].sub_district);
+                $('#district').val(data[0].district);
+                $('#province').val(data[0].province);
+                $('#postcode').val(data[0].postcode);
+
+            });
+            $('#save').click(function () {
+                $.ajax({
+                    url: 'http://mba.bkksol.com/uiPK/apipk/index.php',
+                    type: 'POST',
+                    data: "mode=" + "update" + "&users_id=" + $("#users_id").val() +
+                        "&firstname=" + $("#firstname").val() +
+                        "&lastname=" + $("#lastname").val() +
+                        "&nickname=" + $("#nickname").val() +
+                        "&card_id=" + $("#card_id").val() +
+                        "&email=" + $("#email").val() +
+                        "&birthdate=" + $("#birthdate").val() +
+                        "&mobile=" + $("#mobile").val() +
+                        "&address=" + $("#address").val() +
+                        "&sub_district=" + $("#sub_district").val() +
+                        "&district=" + $("#district").val() +
+                        "&province=" + $("#province").val() +
+                        "&postcode=" + $("#postcode").val(),
+
+                    success: function (data) {
+                        console.log(data);
+
+                        ons.notification.toast('The data was saved', {
+                            timeout: 1000
+                        }).then(function (save) {
+                            window.location.replace('page3.html?users_id=' + pinid);
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+   
+
+
+    <style>
+        h1{
+            text-align: center;
+        }
+        .page,label,input,textarea,button {
+            font-family: 'Kanit', sans-serif;
+           }
+  
+        b {
+            font-family: 'Abril Fatface', cursive;
+        }
+
+        b {
+            color: white;
+            font-size: 20px;
+        }
+
+        .button--large--cta  {
+            background: #17a2b8;
+        }
+        a, p{
+            font-family: 'Kanit', sans-serif;
+        }
+        .myInput {
+            font-family: 'Kanit', sans-serif;
+        }
+        :checked+.tabbar__button{
+            color:  #17a2b8;
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+    <ons-page>
+        <nav class="navbar" style="background-color: #17a2b8;">
+            <span><b>PK @HOME</b></span>
+            <div class="dropdown show">
+                <a style="color: #ffffff;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <span style="font-size: 1.5rem;"> <i class="fas fa-bars"></i></span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="left: -35vw;">
+                    <a class="dropdown-item" href="page2.html">Home</a>
+                    <a class="dropdown-item" id="logout">Sign out</a>
+                </div>
+            </div>
+        </nav>
+
+        <div style="text-align: center; ">
+            <h1><a>Information</a></h1>
+        </div>
+
+        <ons-card>
+            <form id="myform1" style="margin-left:5vw; margin-right:5vw; margin-top: 4vh;" novalidate>
+                <div id="users_id"></div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>First name</label>
+                        <input type="text" class="form-control" id="firstname" placeholder="firstname" autocomplete="off" required>
+                        <div class="invalid-feedback">
+                            กรุณากรอกชื่อ นามสกุล
+                            </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Last name</label>
+                        <input type="text" class="form-control" id="lastname" placeholder="lastname" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Nickname</label>
+                        <input type="text" class="form-control" id="nickname" placeholder="nickname" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Card ID</label>
+                        <input type="tel" maxlength="13" class="form-control" id="card_id" placeholder="Card ID" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>E-mail</label><small id="passwordHelpInline" class="text-muted">
+                            example@example.net
+                        </small>
+                        <input type="email" class="form-control" id="email" placeholder="E-mail">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Birthday</label>
+                        <input type="date" class="form-control" id="birthdate" placeholder="Birthday">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Mobile</label>
+                        <input type="tel" maxlength="10" class="form-control" id="mobile" placeholder="Mobile" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <textarea class="form-control" id="address" rows="2" placeholder="Address"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Sub District</label>
+                            <input type="text" class="form-control" id="sub_district" placeholder="Sub District">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>District</label>
+                            <input type="text" class="form-control" id="district" placeholder="District">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Province</label>
+                            <input type="text" class="form-control" id="province" placeholder="Province">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Postcode</label>
+                            <input type="tel" maxlength="5" class="form-control" id="postcode" placeholder="Postcode"
+                                required>
+                                
+                    </div>
+                </div>
+
+            </form>
+
+        </ons-card>
+        <p style="margin-top: 20px;">
+            <button id="save" class="button--large--cta" style="width: 95%;  margin: 0 auto;">Update</button>
+        </p>
+        <p style="margin-top: 20px;">
+            <button onclick="pic()" class="button--large--cta" style="width: 95%;  margin: 0 auto;">Take Picture</button>
+        </p>
+
+        </div>
+        </p>
+
+    </ons-page>
+    <!-- <script src="https://cdn.rawgit.com/PascaleBeier/bootstrap-validate/v2.2.0/dist/bootstrap-validate.js"></script>
+    <script>
+        bootstrapValidate('#firstname', 'max:20:Enter no more than 20 characters!')
+        bootstrapValidate('#lastname', 'max:20:Enter no more than 20 characters!')
+        bootstrapValidate('#postcode', 'maxlength:5:Enter at least 5 characters')
+        bootstrapValidate('#email', 'email:Enter a valid email address')
+        bootstrapValidate('#card_id', 'maxlength:13:Enter at least 13 characters')
+        bootstrapValidate('#mobile', 'max:12:Enter no more than 12 characters!')
+    </script> -->
+    <script>
+    function pic(){
+        alert("hello");
+    }
+    </script>
+</body>
+
+</html>
