@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,16 +12,17 @@
     <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-        crossorigin="anonymous">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
-        crossorigin="anonymous">
-        <link href="https://fonts.googleapis.com/css?family=Concert+One" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+        integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Concert+One" rel="stylesheet">
+
     <title>Document</title>
     <style>
-         .page {
+        .page {
             font-family: 'Kanit', sans-serif;
         }
 
@@ -37,55 +39,67 @@
             font-family: 'Concert One', cursive;
             margin-bottom: 0rem;
         }
+
         /* ------- Presentational Formatting --------- */
         * {
             font-family: Arial, Helvetica, sans-serif;
         }
+
         h1 {
             text-align: center;
         }
+
         .center {
             margin: 0 auto;
             width: 100%;
         }
+
         .button--material {
             background: #17a2b8;
         }
     </style>
 </head>
+
 <body>
     <ons-page>
         <ons-toolbar style="background-color: #17a2b8">
             <div class="center">
-               <b>PK@HOME</b> 
+                <b>PK@HOME</b>
             </div>
         </ons-toolbar>
 
-        <ons-card style="margin-top:15vh;"> 
-            <div style="margin-top:3vh;"><center><h1><p>WELCOME TO PK@HOME</p></h1></center></div> 
+        <ons-card style="margin-top:15vh;">
+            <div style="margin-top:3vh;">
+                <center>
+                    <h1>
+                        <p>WELCOME TO PK@HOME</p>
+                    </h1>
+                </center>
+            </div>
             <div style="margin-top:3vh;">
                 <div class="col-auto">
                     <label class="sr-only" for="inlineFormInputGroup">Username</label>
                     <div class="input-group mb-2">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="fa fa-user-circle" aria-hidden="true"></i></div>
-                      </div>
-                      <input type="text" class="form-control" id="usernameInput" placeholder="Username">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fa fa-user-circle" aria-hidden="true"></i></div>
+                        </div>
+                        <input type="text" class="form-control" id="usernameInput" placeholder="Username">
                     </div>
-                  </div>
-                  <div class="col-auto" style="margin-top:2vh;">
+                </div>
+                <div class="col-auto" style="margin-top:2vh;">
                     <label class="sr-only" for="inlineFormInputGroup">Password</label>
                     <div class="input-group mb-2">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="fa fa-key" aria-hidden="true"></i></div>
-                      </div>
-                      <input type="password" class="form-control" id="passwordInput" placeholder="Password">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fa fa-key" aria-hidden="true"></i></div>
+                        </div>
+                        <input type="password" class="form-control" id="passwordInput" placeholder="Password">
                     </div>
-                  </div>
-        
+                </div>
+
             </div>
             <p style="margin-top: 2vh;text-align: center;">
-                <ons-button class="button--large--cta" id="login" style="width: 95%; margin: 0 auto;"><strong>Login</strong></ons-button>
+                <ons-button class="button--large--cta" id="login" style="width: 95%; margin: 0 auto;">
+                    <strong>Login</strong></ons-button>
             </p>
             <div style="margin-bottom:5vh;"></div>
         </ons-card>
@@ -98,28 +112,28 @@
                 if (usernameInput != "" && passwordInput != "") {
                     $.ajax({
                         type: 'post',
-                        url: 'http://mba.bkksol.com/uiPK/apipk/index.php',
+                        url: 'https://mba.bkksol.com/uiPK/apipk/index.php',
                         data: {
                             login: "login",
                             username: usernameInput,
                             password: passwordInput
                         },
                         success: function (data) {
-                             
+
                             var obj = JSON.parse(data);
                             console.log(obj);
-                            document.cookie = "user_id="+obj[2].user_id; 
+                            document.cookie = "user_id=" + obj[2].user_id;
                             console.log(document.cookie);
 
                             var cook = document.cookie;
                             cook = cook.split("user_id=");
                             console.log(cook[1].split(";")[0]);
-                            
+
                             if (obj[0].status == 1) {
                                 ons.notification.toast('Login success', {
                                     timeout: 2000
                                 }).then(function (login) {
-                                    window.location.replace('page2.html?users_id='+obj[2].user_id); 
+                                    window.location.replace('page2.html?users_id=' + obj[2].user_id);
                                 });
                             } else {
                                 ons.notification.toast('Login fail', {
@@ -138,4 +152,5 @@
         });
     </script>
 </body>
+
 </html>

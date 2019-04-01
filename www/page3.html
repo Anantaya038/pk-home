@@ -10,16 +10,18 @@
     <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
     <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
     <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+        integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Concert+One" rel="stylesheet">
 
     <script type="text/javascript">
         var getUrlParameter = function getUrlParameter(sParam) {
@@ -39,7 +41,7 @@
             var pinid = getUrlParameter('users_id');
 
             $.ajax({
-                url: 'http://mba.bkksol.com/uiPK/apipk/index.php?mode=update&users_id=' + pinid,
+                url: 'https://mba.bkksol.com/uiPK/apipk/index.php?mode=update&users_id=' + pinid,
                 type: 'GET'
             }).done(function (data) {
                 console.log(data);
@@ -62,7 +64,7 @@
             });
             $('#save').click(function () {
                 $.ajax({
-                    url: 'http://mba.bkksol.com/uiPK/apipk/index.php',
+                    url: 'https://mba.bkksol.com/uiPK/apipk/index.php',
                     type: 'POST',
                     data: "mode=" + "update" + "&users_id=" + $("#users_id").val() +
                         "&firstname=" + $("#firstname").val() +
@@ -89,43 +91,57 @@
                     }
                 });
             });
+
+            $('#logout').click(function () {
+
+                $.ajax({
+                    url: 'https://mba.bkksol.com/uiPK/apipk/index.php?argument=logOut',
+                    success: function (data) {
+                        window.location.replace('index.html');
+                    }
+                });
+            });
         });
     </script>
 
-   
+
 
 
     <style>
-        h1{
+        h1 {
             text-align: center;
         }
-        .page,label,input,textarea,button {
+
+        .page,
+        label,
+        input,
+        textarea,
+        button {
             font-family: 'Kanit', sans-serif;
-           }
-  
-        b {
-            font-family: 'Abril Fatface', cursive;
         }
 
         b {
+            font-family: 'Concert One', cursive;
             color: white;
             font-size: 20px;
         }
 
-        .button--large--cta  {
+        .button--large--cta {
             background: #17a2b8;
         }
-        a, p{
+
+        a,
+        p {
             font-family: 'Kanit', sans-serif;
         }
+
         .myInput {
             font-family: 'Kanit', sans-serif;
         }
-        :checked+.tabbar__button{
-            color:  #17a2b8;
+
+        :checked+.tabbar__button {
+            color: #17a2b8;
         }
-
-
     </style>
 </head>
 
@@ -135,8 +151,8 @@
         <nav class="navbar" style="background-color: #17a2b8;">
             <span><b>PK @HOME</b></span>
             <div class="dropdown show">
-                <a style="color: #ffffff;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
+                <a style="color: #ffffff;" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
                     <span style="font-size: 1.5rem;"> <i class="fas fa-bars"></i></span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="left: -35vw;">
@@ -156,10 +172,11 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label>First name</label>
-                        <input type="text" class="form-control" id="firstname" placeholder="firstname" autocomplete="off" required>
+                        <input type="text" class="form-control" id="firstname" placeholder="firstname"
+                            autocomplete="off" required>
                         <div class="invalid-feedback">
                             กรุณากรอกชื่อ นามสกุล
-                            </div>
+                        </div>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Last name</label>
@@ -171,7 +188,8 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label>Card ID</label>
-                        <input type="tel" maxlength="13" class="form-control" id="card_id" placeholder="Card ID" required>
+                        <input type="tel" maxlength="13" class="form-control" id="card_id" placeholder="Card ID"
+                            required>
                     </div>
                     <div class="form-group col-md-6">
                         <label>E-mail</label><small id="passwordHelpInline" class="text-muted">
@@ -194,35 +212,50 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label>Sub District</label>
+                        <label">Sub District</label>
                             <input type="text" class="form-control" id="sub_district" placeholder="Sub District">
                     </div>
                     <div class="form-group col-md-6">
-                        <label>District</label>
+                        <label">District</label>
                             <input type="text" class="form-control" id="district" placeholder="District">
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Province</label>
+                        <label">Province</label>
                             <input type="text" class="form-control" id="province" placeholder="Province">
                     </div>
                     <div class="form-group col-md-2">
-                        <label>Postcode</label>
+                        <label">Postcode</label>
                             <input type="tel" maxlength="5" class="form-control" id="postcode" placeholder="Postcode"
                                 required>
-                                
+
                     </div>
                 </div>
 
+
+
             </form>
 
+            
         </ons-card>
         <p style="margin-top: 20px;">
             <button id="save" class="button--large--cta" style="width: 95%;  margin: 0 auto;">Update</button>
         </p>
-        <p style="margin-top: 20px;">
-            <button onclick="pic()" class="button--large--cta" style="width: 95%;  margin: 0 auto;">Take Picture</button>
-        </p>
+        <center><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPC57mJvbW-Lp6GvTanXBZfvCbs8IrtVlzMsQfc4cj8qsUne4zDg" class="img-fluid" alt="Responsive image" onclick="nextMap()"> </center>
 
+        <button type="button" class="btn btn-danger btn-lg btn-block " onclick="nextMap()" >Current Location</button>
+
+
+
+            <script>
+                 var pinid = getUrlParameter('users_id');
+                function nextMap() {
+                    window.location.assign('currentLocation.html?users_id=' + pinid)
+                }
+                function nextcampe() {
+                    window.location.assign('camera.html?users_id=' + pinid)
+                }
+            </script>
+            
         </div>
         </p>
 
@@ -236,11 +269,6 @@
         bootstrapValidate('#card_id', 'maxlength:13:Enter at least 13 characters')
         bootstrapValidate('#mobile', 'max:12:Enter no more than 12 characters!')
     </script> -->
-    <script>
-    function pic(){
-        alert("hello");
-    }
-    </script>
 </body>
 
 </html>

@@ -19,16 +19,13 @@
         crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-
-
+    <link href="https://fonts.googleapis.com/css?family=Concert+One" rel="stylesheet">
 
     <script type="text/javascript">
-        var path = 'http://mba.bkksol.com/uiPK/apipk/'
+        var path = 'https://mba.bkksol.com/uiPK/apipk/'
 
         var getUrlParameter = function getUrlParameter(sParam) {
             var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -107,7 +104,7 @@
             $('#save2').click(function () {
                 // var data = JSON.parse(data);
                 $.ajax({
-                    url: 'http://mba.bkksol.com/uiPK/apipk/index.php',
+                    url: 'https://mba.bkksol.com/uiPK/apipk/index.php',
                     type: 'POST',
                     data: "mode=" + "updatedatetime" +
 
@@ -175,19 +172,9 @@
                                 '<div class="card">' +
                                 '<label>' + 
                                 '<button type="button" class="btn" style="float:right; background-color:#17a2b8; color: white;"onclick="myFunction('+data[i].appointment_id+')">change status</button>'+
-                                // '<h6 style="float:right; ">' + 'status : ' + status + '</h6>' +
+
                                '<p >' + data[i].firstname + '   ' + data[i].lastname + '</p>' +
-                                // '<select   style="float:right" ">'+
-                               
-                                // '<option value="0"'
-                                //  if(data[i].status_id==0){
-                                // row+= 'selected' }+'>'+
-                                // '</option>'+
-                                // '<option value="1" '
-                                // if(data[i].status_id==1){
-                                // row+= 'selected' }+'>'
-                                // +'</option>'+
-                                // '</select>'+
+         
                                 '</label>' +
                              
                                 '<label>' +
@@ -197,7 +184,7 @@
                                 '<div class="row">' +
 
                                 '<div class="col" style="text-align: center;">' +
-                                '<a href="page44.html?users_id=' + data[i].users_id +
+                                '<a href="page4.html?users_id=' + data[i].users_id +
                                 '" style="font-size: 15px; ">' +
                                 '<div style="font-size:2em; text-align: center; color:black"><i class="fas fa-file-signature"></i></div>' + 'Treatment' + '</a></div>' +
                                 '<div class="col" style="text-align: center;">' +
@@ -225,13 +212,17 @@
             $('#logout').click(function () {
 
                 $.ajax({
-                    url: 'http://mba.bkksol.com/uiPK/apipk/index.php?argument=logOut',
+                    url: 'https://mba.bkksol.com/uiPK/apipk/index.php?argument=logOut',
                     success: function (data) {
                         window.location.replace('index.html');
                     }
                 });
             });
+            
         });
+        function map(){
+                window.location.replace('map.html');
+            }
     </script>
 
 
@@ -247,7 +238,9 @@
         }
 
         b {
-            font-family: 'Abril Fatface', cursive;
+            font-family: 'Concert One', cursive;
+            color: white; 
+            font-size: 20px;
         }
 
 
@@ -264,11 +257,6 @@
         .page--material__content h1, h1{
             text-align: center;
             margin: -0.4em 0;
-        }
-
-        b {
-            color: white;
-            font-size: 20px;
         }
 
         [type=submit] {
@@ -293,7 +281,7 @@
 </head>
 
 <body>
-
+        <template id="tab1.html">
     <ons-page>
         <nav class="navbar" style="background-color: #17a2b8;">
             <span><b>PK @HOME</b></span>
@@ -305,7 +293,6 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="left: -35vw;">
                     <a class="dropdown-item" href="page2.html">Home</a>
                     <a class="dropdown-item" id="logout">Sign out</a>
-                    <a class="dropdown-item" href="page5.html">Picture</a>
                 </div>
             </div>
         </nav>
@@ -320,8 +307,16 @@
                 </div>
         </div>
 
+           
+    
+  
     </ons-page>
+</template>
 
+
+    <ons-tabbar swipeable position="bottom">
+        <ons-tab page="tab1.html" onclick="map()"active><i class="fas fa-map-marked-alt fa-2x" ></i></ons-tab>
+    </ons-tabbar>
 
     <!-- edit  -->
 
@@ -381,6 +376,9 @@
     </div>
 
 
+   
+      
+    
 </body>
 
 </html>

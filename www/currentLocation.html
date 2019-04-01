@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Geolocation</title>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+  <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Concert+One" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+  
+
+  <script type="text/javascript">
+
+    $(function () {
+
+      var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+          sURLVariables = sPageURL.split('&'),
+          sParameterName,
+          i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+          sParameterName = sURLVariables[i].split('=');
+          if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+          }
+        }
+      };
+
+      $('#mapclick').click(function () {
+
+        var pinid = getUrlParameter('users_id');
+        // alert(pinid);
+
+        $.ajax({
+          url: 'https://mba.bkksol.com/uiPK/apipk/index.php',
+          type: 'POST',
+          data: "mode=" + "map" +
+            "&users_id=" + pinid +
+            "&latitudes=" + $("#latbox").val() +
+            "&longitudes=" + $("#lngbox").val(),
+
+
+          success: function (data) {
+            a=$("#latbox").val();
+            b=$("#lngbox").val();
+            alert("Latitude = "+$("#latbox").val()+' '+' '+' '+"Longitude = "+$("#lngbox").val() );
+         
+            console.log(data);
+         
+            ons.notification.toast('The data was saved', {
+              timeout: 100
+            }).then(function (data) {
+              window.location.replace('currentLocation.html?users_id='+pinid);
+            });
+          }
+        })
+      });
+
+    });
+
+
+    // Note: This example requires that you consent to location sharing when
+    // prompted by your browser. If you see the error "The Geolocation service
+    // failed.", it means you probably did not give permission for the browser to
+    // locate you.
+    var map, infoWindow;
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 3.761728449950002, lng: 100.6527900695800 },
+        zoom: 11
+      });
+      infoWindow = new google.maps.InfoWindow;
+
+      // Try HTML5 geolocation.
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          // console.log(pos.lat);
+          // console.log(pos.lng);
+          formlat = document.getElementById("latbox").value = pos.lat;
+          formlng = document.getElementById("lngbox").value = pos.lng;
+          // alert("lat"+formlat+"<br>"+"lng"+formlng);
+         
+
+          infoWindow.setPosition(pos);
+          infoWindow.setContent('<i class="fas fa-map-marker-alt">Current Position</i>');
+          infoWindow.open(map);
+          map.setCenter(pos);
+        }, function () {
+          handleLocationError(true, infoWindow, map.getCenter());
+        });
+      } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+      }
+    }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+      infoWindow.setPosition(pos);
+      infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+      infoWindow.open(map);
+    }
+
+    $('#logout').click(function () {
+
+      $.ajax({
+        url: 'https://mba.bkksol.com/uiPK/apipk/index.php?argument=logOut',
+        success: function (data) {
+          window.location.replace('index.html');
+        }
+      });
+    });
+  </script>
+
+
+  <style>
+    /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+    #map {
+      height: 425px;
+    }
+
+    /* Optional: Makes the sample page fill the window. */
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .page,
+    label,
+    input,
+    textarea,
+    button {
+      font-family: 'Kanit', sans-serif;
+    }
+
+    b {
+      font-family: 'Concert One', cursive;
+      color: white;
+      font-size: 17px;
+    }
+
+    a {
+      font-family: 'Kanit', sans-serif;
+    }
+  </style>
+
+
+</head>
+
+<body>
+  <ons-page>
+    <nav class="navbar" style="background-color: #17a2b8;">
+      <span><b>PK @HOME</b></span>
+      <div class="dropdown show">
+          <a style="color: #ffffff;" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              <span style="font-size: 1.5rem;"> <i class="fas fa-bars"></i></span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="left: -35vw;">
+              <a class="dropdown-item" href="page2.html">Home</a>
+              <a class="dropdown-item" id="logout">Sign out</a>
+          </div>
+      </div>
+    </nav>
+
+
+    <br>
+    <div id="map"></div>
+
+    <br>
+    <br>
+
+    <!-- <center><button type="button" id="mapclicks"class="btn btn-success btn-lg btn-block">Save</button></center> -->
+
+    <form>
+        <div id="latlong">
+          <center>
+            <p><input size="20" type="hidden" id="latbox" name="lat"></p>
+          </center>
+          <center>
+            <p><input size="20" type="hidden" id="lngbox" name="lng"></p>
+          </center>
+  
+          <button type="button" id="mapclick" class="btn btn-success btn-lg btn-block">Save</button>
+  
+        </div>
+  
+      </form>
+
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlP8LZQLY2I-a0XHqmnh1dWJEN-sRvFVc&callback=initMap">
+      </script>
+
+    <br>
+
+
+  </ons-page>
+</body>
+
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html >
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+        crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Concert+One" rel="stylesheet">
+
+    <title>Simple Maps</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      a ,p, h6, label, h4, button{
+            font-family: 'Kanit', sans-serif;
+            color: black;
+        }
+        b {
+            font-family: 'Concert One', cursive;
+            color: white;
+            font-size: 20px;
+        }
+    </style>
+  </head>
+
+<html>
+  <body>
+      <nav class="navbar" style="background-color: #17a2b8;">
+          <span><b>PK @HOME</b></span>
+          <div class="dropdown show">
+              <a style="color: #ffffff;" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  <span style="font-size: 1.5rem;"> <i class="fas fa-bars"></i></span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="left: -35vw;">
+                  <a class="dropdown-item" href="page2.html">Home</a>
+                  <a class="dropdown-item" id="logout">Sign out</a>
+              </div>
+          </div>
+      </nav>
+    <div id="map"></div>
+
+    <script>
+
+      function initMap() {
+			var mapOptions = {
+			  center: {lat: 13.847860, lng: 100.604274},
+			  zoom: 7,
+			}
+				
+			var maps = new google.maps.Map(document.getElementById("map"),mapOptions);
+
+			var marker, info;
+
+			$.getJSON("https://mba.bkksol.com/uiPK/apipk/index.php?mode=readmarker",function(jsonObj) {
+					//*** loop
+					$.each(jsonObj,function(i,item){
+						marker = new google.maps.Marker({
+						   position: new google.maps.LatLng(item.lat,item.lng),
+						   map: maps,
+						});
+
+					  info = new google.maps.InfoWindow();
+
+					  google.maps.event.addListener(marker,'click', (function(marker,i) {
+						return function() {
+						  info.setContent(item.name);
+						  info.open(maps,marker);
+						}
+					  })(marker,i));
+
+					}); // loop
+
+			 });
+       $('#logout').click(function () {
+
+$.ajax({
+    url: 'https://mba.bkksol.com/uiPK/apipk/index.php?argument=logOut',
+    success: function (data) {
+        window.location.replace('index.html');
+    }
+});
+});
+
+		}
+    </script>
+
+
+
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlP8LZQLY2I-a0XHqmnh1dWJEN-sRvFVc&callback=initMap">
+    </script>
+  </body>
+</html>
